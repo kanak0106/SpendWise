@@ -1,0 +1,12 @@
+.env
+.env.*
+!.env.example
+node_modules/
+client/node_modules/
+data/*.db
+data/*.db-shm
+data/*.db-wal
+client/dist/
+*.log
+.DS_Store
+Thumbs.db

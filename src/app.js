@@ -522,11 +522,6 @@ app.delete("/api/transactions/:id", authenticateToken, (req, res) => {
 app.get("/api/health", (req, res) => {
   res.json({ success: true, message: "SpendWise API is working." });
 });
-
-app.get("/api/health", (req, res) => {
-  res.json({ success: true, message: "SpendWise API is working." });
-});
-
 // TEMPORARY: Check whether the existing account exists
 app.get("/api/check-demo-account", (req, res) => {
   try {

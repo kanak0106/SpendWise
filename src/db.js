@@ -16,7 +16,7 @@ const dbPath = path.resolve(
 fs.mkdirSync(path.dirname(dbPath), { recursive: true });
 
 const db = new Database(dbPath);
-
+console.log("Using database:", dbPath);
 db.pragma("foreign_keys = ON");
 
 db.exec(`
@@ -73,6 +73,7 @@ db.exec(`
     ON transactions(account_id);
 `);
 
+console.log("Using database:", dbPath);
 console.log("SpendWise database is ready.");
 
 module.exports = db;

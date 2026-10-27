@@ -14,11 +14,19 @@ const db = require("./db");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://localhost:5174"],
+    origin: [
+      "http://localhost:5173",
+      "http://localhost:5174",
+      "https://spend-wise-vert-beta.vercel.app",
+      "https://spend-wise-git-main-kanak-sharmas-projects-bce16fa1.vercel.app",
+      "https://spend-wise-bn4mxrsdm-kanak-sharmas-projects-bce16fa1.vercel.app",
+    ],
   })
 );
+
 
 app.use(express.json());
 const JWT_SECRET = process.env.JWT_SECRET;

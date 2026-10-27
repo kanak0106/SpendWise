@@ -1,10 +1,11 @@
 
 import { useEffect, useState } from "react";
-const API_BASE_URL = "https://spendwise-vi3c.onrender.com/api";
+
 import "./App.css";
 import { jsPDF } from "jspdf";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend,  BarChart,
   Bar, XAxis, YAxis, CartesianGrid, } from "recharts";
+  const API_BASE_URL = "https://spendwise-vi3c.onrender.com";
 function App() {
   const [transactions, setTransactions] = useState([]);
   const [token, setToken] = useState(
@@ -48,7 +49,7 @@ const handleAuthSubmit = async (event) => {
 
   try {
     const response = await fetch(
-      `https://spendwise-vi3c.onrender.com${endpoint}`,
+      `${API_BASE_URL}${endpoint}`,
       {
         method: "POST",
         headers: {
@@ -159,7 +160,7 @@ useEffect(() => {
     setTransactions([]);
     return;
   }
-fetch(`${API_BASE_URL}/transactions`, {
+fetch(`${API_BASE_URL}/api/transactions`, {
   headers: {
     Authorization: `Bearer ${token}`,
   },
@@ -199,7 +200,7 @@ fetch(`${API_BASE_URL}/transactions`, {
 
     try {
      const response = await fetch(
-  `${API_BASE_URL}/transactions/${transactionId}?user_id=1`,
+  `${API_BASE_URL}/api/transactions/${transactionId}?user_id=1`,
   {
     method: "DELETE",
     headers: {

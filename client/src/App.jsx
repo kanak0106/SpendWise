@@ -1,5 +1,6 @@
 
 import { useEffect, useState } from "react";
+const API_BASE_URL = "https://spendwise-vi3c.onrender.com/api";
 import "./App.css";
 import { jsPDF } from "jspdf";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend,  BarChart,
@@ -47,7 +48,7 @@ const handleAuthSubmit = async (event) => {
 
   try {
     const response = await fetch(
-      `http://localhost:5000${endpoint}`,
+      `https://spendwise-vi3c.onrender.com${endpoint}`,
       {
         method: "POST",
         headers: {
@@ -158,12 +159,11 @@ useEffect(() => {
     setTransactions([]);
     return;
   }
-
-  fetch("http://localhost:5000/api/transactions", {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
+fetch(`${API_BASE_URL}/transactions`, {
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
+})
     .then(async (response) => {
       const result = await response.json();
 
@@ -198,13 +198,13 @@ useEffect(() => {
     }
 
     try {
-      const response = await fetch(
-        `http://localhost:5000/api/transactions/${transactionId}?user_id=1`,
-        {
-          method: "DELETE",
-           headers: {
-    Authorization: `Bearer ${token}`,
-  },
+     const response = await fetch(
+  `${API_BASE_URL}/transactions/${transactionId}?user_id=1`,
+  {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
         }
       );
 
@@ -267,7 +267,7 @@ useEffect(() => {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/transactions/${item.id}`,
+        `${API_BASE_URL}/transactions/${item.id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -289,10 +289,15 @@ useEffect(() => {
         return;
       }
 
-      const refreshed = await fetch(
-        "http://localhost:5000/api/transactions?user_id=1"
-      );
-      const data = await refreshed.json();
+     const refreshed = await fetch(
+  `${API_BASE_URL}/transactions?user_id=1`,
+  {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+);
+const data = await refreshed.json();
 
       if (data.success) setTransactions(data.data);
 
@@ -397,7 +402,7 @@ const expenseData = Object.values(
     }
 
 
-fetch("http://localhost:5000/api/transactions", {
+fetch(`${API_BASE_URL}/transactions`, {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
@@ -423,7 +428,7 @@ fetch("http://localhost:5000/api/transactions", {
       })
       
 .then(() => {
-  return fetch("http://localhost:5000/api/transactions", {
+  return fetch(`${API_BASE_URL}/transactions`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -766,13 +771,13 @@ if (!token || !currentUser) {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/transactions",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
+  `${API_BASE_URL}/transactions`,
+  {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
           body: JSON.stringify({
             account_id: currentUser.account_id,
             type,
@@ -790,14 +795,14 @@ if (!token || !currentUser) {
         throw new Error(result.message || "Could not save transaction.");
       }
 
-      const refreshed = await fetch(
-        "http://localhost:5000/api/transactions",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+    const refreshed = await fetch(
+  `${API_BASE_URL}/transactions`,
+  {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+);
 
       const data = await refreshed.json();
 

@@ -523,6 +523,30 @@ app.get("/api/health", (req, res) => {
   res.json({ success: true, message: "SpendWise API is working." });
 });
 
+app.get("/api/health", (req, res) => {
+  res.json({ success: true, message: "SpendWise API is working." });
+});
+
+// TEMPORARY: Check whether the existing account exists
+app.get("/api/check-demo-account", (req, res) => {
+  try {
+    const user = db.prepare(
+      "SELECT id, email FROM users WHERE email = ?"
+    ).get("test@spendwise.local");
+
+    res.json({
+      accountExists: Boolean(user),
+      email: user ? user.email : null
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Database check failed." });
+  }
+});
+
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
+});
+
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
